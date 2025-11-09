@@ -1,0 +1,68 @@
+"use client"
+
+import { useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { SignUpForm } from "@/components/forms/sign-up-form"
+import { FeatureMatrix } from "@/components/features/feature-matrix"
+import { Card } from "@/components/ui/card"
+import { useFinanceStore } from "@/lib/store"
+import { TrendingUp, Zap, Bell } from "lucide-react"
+
+export default function Home() {
+  const router = useRouter()
+  const user = useFinanceStore((state) => state.user)
+
+  useEffect(() => {
+    if (user) {
+      router.push("/goals")
+    }
+  }, [user, router])
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
+      {/* Hero Section */}
+      <div className="min-h-screen flex items-center justify-center px-4 py-8">
+        <div className="w-full max-w-6xl">
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+            {/* Left Column - Hero Card */}
+            <div className="flex flex-col justify-center">
+              <Card className="p-8 bg-card/50 backdrop-blur border-border/50 shadow-xl">
+                <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-6 leading-tight text-balance">
+                  A UK money mentor that nudges you to your goals
+                </h1>
+
+                <div className="space-y-4">
+                  <div className="flex gap-4">
+                    <Zap className="w-6 h-6 text-accent flex-shrink-0 mt-1" aria-hidden="true" />
+                    <p className="text-foreground">Connect your bank via Open Banking (read-only)</p>
+                  </div>
+                  <div className="flex gap-4">
+                    <TrendingUp className="w-6 h-6 text-accent flex-shrink-0 mt-1" aria-hidden="true" />
+                    <p className="text-foreground">Budget suggestions tailored to your habits</p>
+                  </div>
+                  <div className="flex gap-4">
+                    <Bell className="w-6 h-6 text-accent flex-shrink-0 mt-1" aria-hidden="true" />
+                    <p className="text-foreground">Real-time nudges before unaligned spends</p>
+                  </div>
+                </div>
+
+                <div className="mt-8 pt-8 border-t border-border">
+                  <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-lg p-6 text-center">
+                    <p className="text-sm text-muted-foreground">📊 Illustration placeholder</p>
+                  </div>
+                </div>
+              </Card>
+            </div>
+
+            {/* Right Column - Form Card */}
+            <div className="flex flex-col justify-center">
+              <SignUpForm />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <FeatureMatrix />
+    </div>
+  )
+}
