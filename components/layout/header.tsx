@@ -4,7 +4,6 @@ import Link from "next/link"
 import { Moon, Sun, HelpCircle } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import Image from "next/image"
 
 export function Header() {
   const [theme, setTheme] = useState<"light" | "dark">("light")
@@ -36,7 +35,9 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-bold text-xl text-primary">
-          <Image src="/whispay-logo.png" alt="Whispay" width={32} height={32} className="rounded-lg" />
+          <div className="w-8 h-8 bg-gradient-to-br from-primary/20 to-emerald-500/20 rounded-lg flex items-center justify-center border border-primary/30">
+            <span className="text-primary font-bold text-sm">W</span>
+          </div>
           Whispay
         </Link>
 
