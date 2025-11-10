@@ -41,6 +41,7 @@ export interface FinanceStore {
   addGoal: (goal: Goal) => void
   updateGoal: (id: string, updates: Partial<Goal>) => void
   removeGoal: (id: string) => void
+  resetUser: () => void
 }
 
 export const useFinanceStore = create<FinanceStore>()(
@@ -84,6 +85,7 @@ export const useFinanceStore = create<FinanceStore>()(
         set((state) => ({
           goals: state.goals.filter((g) => g.id !== id),
         })),
+      resetUser: () => set({ user: null, incomeSources: [], goals: [] }),
     }),
     {
       name: "whispay-store",

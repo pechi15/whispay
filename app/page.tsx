@@ -1,22 +1,56 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { SignUpForm } from "@/components/forms/sign-up-form"
 import { FeatureMatrix } from "@/components/features/feature-matrix"
 import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 import { useFinanceStore } from "@/lib/store"
 import { TrendingUp, Zap, Bell } from "lucide-react"
 
 export default function Home() {
   const router = useRouter()
   const user = useFinanceStore((state) => state.user)
+  const resetUser = useFinanceStore((state) => state.resetUser)
+  const [isHydrated, setIsHydrated] = useState(false)
 
   useEffect(() => {
-    if (user) {
-      router.push("/goals")
-    }
-  }, [user, router])
+    setIsHydrated(true)
+  }, [])
+
+  if (isHydrated && user) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20 flex items-center justify-center px-4">
+        <Card className="p-8 max-w-md w-full shadow-lg text-center">
+          <h2 className="text-2xl font-bold text-foreground mb-4">Welcome back, {user.fullName}!</h2>
+          <p className="text-muted-foreground mb-6">
+            You're already set up. Continue to your dashboard or start fresh.
+          </p>
+          <div className="flex flex-col gap-3">
+            <Button
+              onClick={() => router.push("/goals")}
+              className="bg-primary hover:bg-primary/90 text-primary-foreground w-full"
+              size="lg"
+            >
+              Continue to goals
+            </Button>
+            <Button
+              onClick={() => {
+                resetUser()
+                setIsHydrated(false)
+              }}
+              variant="outline"
+              className="w-full"
+              size="lg"
+            >
+              Start over
+            </Button>
+          </div>
+        </Card>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
